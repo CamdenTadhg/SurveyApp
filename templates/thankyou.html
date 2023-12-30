@@ -3,6 +3,11 @@
 {% block title %}Survey Complete!{% endblock %}
 
 {% block content %}
+
+{% for category, msg in get_flashed_messages(with_categories=true) %}
+<p class="{{category}}">{{msg}}</p>
+{% endfor %}
+
 <h2 class="survey-title">{{current_survey.title}}</h2>
 <p class="question">Thank you for completing our survey. </p>
 {% endblock %}
