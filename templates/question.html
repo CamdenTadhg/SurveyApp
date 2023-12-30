@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Question #{{number + 1}}{% endblock %}
+
+{% block content %}
+<h2 class="survey-title">{{current_survey.title}}</h2>
+<p class="question">{{current_survey.questions[number].question}}</p>
+<form action="/answer" method="POST">
+    {% for choice in current_survey.questions[number].choices %}
+        <label class="answer" for="{{choice}}">
+            <input type="radio" id="{{choice}}" name="{{number}}">
+            {{choice}}
+        </label>
+    {% endfor %}
+    <br>
+    {% if current_survey.questions[number + 1] %}
+        <button class="next-page">Next</button>
+    {% else %}
+        <button class="next-page">Submit</button>
+    {% endif %}
+</form>
+{% endblock %}
