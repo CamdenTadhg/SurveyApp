@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 from flask_debugtoolbar import DebugToolbarExtension
 from surveys import Question, Survey, satisfaction_survey, personality_quiz, surveys
 
@@ -20,16 +20,28 @@ def show_question(number):
     number = int(number)
     return render_template("question.html", current_survey = satisfaction_survey, number = number)
 
+@app.route('/answer', methods=["POST"])
+def collect_answer():
+    """Add the answer to the responses list"""
+    answer = request.form['response']
+    responses.append(answer)
+    next_number = len(responses)
+    if next_number >= len(satisfaction_survey.questions):
+        return redirect('/thankyou')
+    else: 
+        return redirect(f'/questions/{next_number}')
+
+@app.route('/thankyou')
+def show_thank_you():
+    """Show thank you message upon survey completion"""
+    return render_template("thankyou.html", current_survey = satisfaction_survey)
 
 
-# 18 create question page and style it
-# 17 handle incoming form data (POST)
-# 16 create thank you route 
-# 15 redirect to thank you when questions are complete
-# 14 create thank you page and style it
-# 13 change view function to check that it is the right quuestion page and redirect as necessary
-# 12 when all questions have been answered, any page should redirect to thank you page
-# 11 use flash message to tell user they are trying to access an invalid question when they try to go out of order
+
+# 4 create thank you page and style it
+# 3 change view function to check that it is the right quuestion page and redirect as necessary
+# 2 when all questions have been answered, any page should redirect to thank you page
+# 1 use flash message to tell user they are trying to access an invalid question when they try to go out of order
 
 # 10 store the answers in a session
 # 9 make the system able to handle more than one survey
