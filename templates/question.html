@@ -11,14 +11,17 @@
 <div class="container">
 <h2 class="survey-title">{{current_survey.title}}</h2>
 <p class="question">{{current_survey.questions[number].question}}</p>
-<form action="/answer" method="POST">
+<form action="/answer/{{number}}" method="POST">
     {% for choice in current_survey.questions[number].choices %}
         <label class="answer" for="{{choice}}">
-            <input type="radio" id="{{choice}}" name="response" value="{{choice}}">
+            <input type="radio" id="{{choice}}" name="response" value="{{choice}}" required>
             {{choice}}
         </label>
     {% endfor %}
     <br>
+    {% if current_survey.questions[number].allow_text %}
+        <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+    {% endif %}
     {% if current_survey.questions[number + 1] %}
         <button class="standard-button">Next</button>
     {% else %}

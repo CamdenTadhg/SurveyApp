@@ -28,6 +28,7 @@ def show_start():
 def start_survey():
     """reset responses list and route to first survey question"""
     session["responses"] = []
+    session["comments"] = []
     return redirect('/questions/0')
 
 @app.route('/questions/<number>')
@@ -44,12 +45,19 @@ def show_question(number):
         return redirect(f'/questions/{next_number}') 
     return render_template("question.html", current_survey = surveys[session["choice"]], number = number)
 
-@app.route('/answer', methods=["POST"])
-def collect_answer():
+@app.route('/answer/<number>', methods=["POST"])
+def collect_answer(number):
     """Add the answer to the responses list"""
+    number = int(number)
     responses = session['responses']
     responses.append(request.form['response'])
     session['responses'] = responses
+    comments = session['comments']
+    if surveys[session["choice"]].questions[number].allow_text: 
+        comments.append(request.form['comment'])
+    else:
+        comments.append('')
+    session['comments'] = comments
     next_number = len(responses)
     if next_number >= len(surveys[session["choice"]].questions):
         return redirect('/thankyou')
@@ -59,12 +67,12 @@ def collect_answer():
 @app.route('/thankyou')
 def show_thank_you():
     """Show thank you message upon survey completion"""
+    print("**********")
+    print(session['responses'])
+    print(session['comments'])
+    print('**********')
     return render_template("thankyou.html", current_survey = surveys[session["choice"]])
 
-# 8 make the system able to handle more than one survey
-     # - move start page to be 2nd page
-     #- drop-down menu for selecting survey
-     #- set survey in session
 # 7 allow comments for some questions
 # 6 create nicer thank you page with answers & comments shown
 # 5 prevent resubmission of a survey with a cookie

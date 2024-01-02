@@ -8,7 +8,7 @@
     <form action="/set-survey" method="POST">
         <select name="choice" id="choice" class="instructions">
             {% for key in surveys %}
-            <option value="{{key}}" class="instructions">{{key}} Survey</option>
+            <option value="{{key}}" class="instructions">{{surveys[key].title}}</option>
             {% endfor %}
         </select>
         <button class="standard-button">Submit</button>
