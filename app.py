@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, flash
+from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from surveys import satisfaction_survey
 
@@ -8,17 +8,22 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 debug = DebugToolbarExtension(app)
 
-responses = []
-
 @app.route('/')
 def show_start():
     """Show simple start page for survey"""
     return render_template("start.html", current_survey = satisfaction_survey)
 
+@app.route('/start-survey', methods=["POST"])
+def start_survey():
+    """reset responses list and route to first survey question"""
+    session["responses"] = []
+    return redirect('/questions/0')
+
 @app.route('/questions/<number>')
 def show_question(number):
     """Show the appropriately number question and answer options"""
     number = int(number)
+    responses = session['responses']
     if len(responses) == len(satisfaction_survey.questions):
         flash("You have already completed this survey! Thank you.", 'error')
         return redirect('/thankyou')
@@ -31,8 +36,12 @@ def show_question(number):
 @app.route('/answer', methods=["POST"])
 def collect_answer():
     """Add the answer to the responses list"""
-    answer = request.form['response']
-    responses.append(answer)
+    responses = session['responses']
+    responses.append(request.form['response'])
+    session['responses'] = responses
+    print('*****************')
+    print(session["responses"])
+    print('*****************')
     next_number = len(responses)
     if next_number >= len(satisfaction_survey.questions):
         return redirect('/thankyou')
@@ -42,6 +51,9 @@ def collect_answer():
 @app.route('/thankyou')
 def show_thank_you():
     """Show thank you message upon survey completion"""
+    print('*****************')
+    print(session["responses"])
+    print('*****************')
     return render_template("thankyou.html", current_survey = satisfaction_survey)
 
 # 10 store the answers in a session

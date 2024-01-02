@@ -6,7 +6,7 @@
 <container class="start-page">
     <h2 class="title">{{current_survey.title}}</h2>
     <p  class="instructions">{{current_survey.instructions}}</p>
-    <form action="/questions/0">
+    <form action="/start-survey" method="POST">
         <button class="start">Start</button>
     </form>
 </container>
