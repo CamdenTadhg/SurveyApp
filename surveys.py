@@ -48,7 +48,21 @@ personality_quiz = Survey(
     ]
 )
 
+reading_survey = Survey(
+    "Reading Preferences Survey",
+    "Tell us about your reading habits.",
+    [
+        Question("Do you enjoy reading?"), 
+        Question("What is your favorite genre?", 
+                 ["fantasy", "scifi", "literary", "mystery"]),
+        Question("When do you like to read?",
+                 ["morning", "afternoon", "evening"]),
+        Question("Do you have a favorite book?", allow_text=True),
+    ]
+)
+
 surveys = {
-    "satisfaction": satisfaction_survey,
-    "personality": personality_quiz,
+    "Satisfaction": satisfaction_survey,
+    "Personality": personality_quiz,
+    "Reading": reading_survey
 }

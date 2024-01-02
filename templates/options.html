@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Survey Options{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class = "title">Please select a survey:</h2>
+    <form action="/set-survey" method="POST">
+        <select name="choice" id="choice" class="instructions">
+            {% for key in surveys %}
+            <option value="{{key}}" class="instructions">{{key}} Survey</option>
+            {% endfor %}
+        </select>
+        <button class="standard-button">Submit</button>
+    </form>
+</div>
+{% endblock %}

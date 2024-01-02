@@ -3,12 +3,12 @@
 {% block title %}Survey Start Page {% endblock %}
 
 {% block content %}
-<container class="start-page">
+<div class="container">
     <h2 class="title">{{current_survey.title}}</h2>
     <p  class="instructions">{{current_survey.instructions}}</p>
-    <form action="/start-survey" method="POST">
+    <form action="/reset-responses" method="POST">
         <button class="start">Start</button>
     </form>
-</container>
+</div>
 {% endblock %}
 

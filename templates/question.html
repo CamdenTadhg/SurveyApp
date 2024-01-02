@@ -8,6 +8,7 @@
     <p class="{{category}}">{{msg}}</p>
 {% endfor %}
 
+<div class="container">
 <h2 class="survey-title">{{current_survey.title}}</h2>
 <p class="question">{{current_survey.questions[number].question}}</p>
 <form action="/answer" method="POST">
@@ -19,9 +20,10 @@
     {% endfor %}
     <br>
     {% if current_survey.questions[number + 1] %}
-        <button class="next-page">Next</button>
+        <button class="standard-button">Next</button>
     {% else %}
-        <button class="next-page">Submit</button>
+        <button class="standard-button">Submit</button>
     {% endif %}
 </form>
+</div>
 {% endblock %}
