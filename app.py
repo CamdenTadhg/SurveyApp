@@ -17,6 +17,9 @@ def show_survey_options():
 def set_survey():
     """set selected survey and route to survey start page"""
     session['choice'] = request.form['choice']
+    if session.get(session['choice']):
+        flash("You have already completed this survey! Thank you.", 'error')
+        return redirect('/thankyou')
     return redirect('/survey-start')
 
 @app.route('/survey-start')
@@ -68,15 +71,9 @@ def collect_answer(number):
 def show_thank_you():
     """Show thank you message upon survey completion"""
     length = len(surveys[session["choice"]].questions)
-    print("**********")
-    print(session['responses'])
-    print(session['comments'])
-    print('**********')
+    session[session['choice']] = True
     return render_template("thankyou.html", current_survey = surveys[session["choice"]], length = length)
 
-# 6 create nicer thank you page with answers & comments shown
-# 5 prevent resubmission of a survey with a cookie
-# 4 add Bootstrap to the site
 # 3 allow users to skip questions
 # 2 allow users to go back to previously answered questions and change the answer
 # 1 make a web interface to allow users to create surveys through the web and add them to the system

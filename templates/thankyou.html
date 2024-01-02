@@ -15,7 +15,7 @@
 
 {% for number in range(length) %}
     <p class="question">
-        {{current_survey.questions[number].question}} {{session['responses'][number]}}{% if current_survey.questions[number].allow_text %}, {{session['comments'][number]}}{% endif %}
+        <b>{{current_survey.questions[number].question}}</b> {{session['responses'][number]}}{% if current_survey.questions[number].allow_text %}, {{session['comments'][number]}}{% endif %}
     </p>
 {% endfor %}
 {% endblock %}
