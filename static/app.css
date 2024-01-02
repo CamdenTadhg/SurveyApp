@@ -36,6 +36,12 @@ body {
     font-size: 2rem;
 }
 
+.responses-title{
+    font-family: 'Mooli', sans-serif;
+    font-size: 2rem;
+    margin-top: 10vh;
+}
+
 .question, .answer {
     font-size: 1.5rem;
     font-family: 'Noto Sans', sans-serif;

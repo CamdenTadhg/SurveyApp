@@ -67,13 +67,13 @@ def collect_answer(number):
 @app.route('/thankyou')
 def show_thank_you():
     """Show thank you message upon survey completion"""
+    length = len(surveys[session["choice"]].questions)
     print("**********")
     print(session['responses'])
     print(session['comments'])
     print('**********')
-    return render_template("thankyou.html", current_survey = surveys[session["choice"]])
+    return render_template("thankyou.html", current_survey = surveys[session["choice"]], length = length)
 
-# 7 allow comments for some questions
 # 6 create nicer thank you page with answers & comments shown
 # 5 prevent resubmission of a survey with a cookie
 # 4 add Bootstrap to the site

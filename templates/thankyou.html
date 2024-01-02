@@ -9,5 +9,13 @@
 {% endfor %}
 
 <h2 class="survey-title">{{current_survey.title}}</h2>
-<p class="question">Thank you for completing our survey. </p>
+<p class="question">Thank you for completing our survey.</p>
+
+<h2 class="responses-title">Your Responses</h2>
+
+{% for number in range(length) %}
+    <p class="question">
+        {{current_survey.questions[number].question}} {{session['responses'][number]}}{% if current_survey.questions[number].allow_text %}, {{session['comments'][number]}}{% endif %}
+    </p>
+{% endfor %}
 {% endblock %}
